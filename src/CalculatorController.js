@@ -10,7 +10,10 @@ class CalculatorController {
             return;
         }
         if (CalculatorController.operator === "=")
+        {
             CalculatorModel.setValue("0");
+            CalculatorController.operator = "";
+        }
 
         CalculatorController.value += number;
         document.getElementById('result').value = CalculatorController.value;
@@ -25,21 +28,34 @@ class CalculatorController {
             return;
         }
 
-        if (oper === '+') {
-            CalculatorController.operator = '+';
+        if (CalculatorController.operator === "+") 
+        {
+            CalculatorModel.add(CalculatorController.value);
+            document.getElementById('result').value = CalculatorModel.value;
+            CalculatorController.operator = oper;
             CalculatorController.value = "0";
+            return;
         }
-        if (oper === '-') {
-            CalculatorController.operator = '-';
+        if (CalculatorController.operator === '-') {
+            CalculatorModel.minus(CalculatorController.value);
+            document.getElementById('result').value = CalculatorModel.value;
+            CalculatorController.operator = oper;
             CalculatorController.value = "0";
+            return;
         }
-        if (oper === '*') {
-            CalculatorController.operator = '*';
+        if (CalculatorController.operator === '*') {
+            CalculatorModel.multiply(CalculatorController.value);
+            document.getElementById('result').value = CalculatorModel.value;
+            CalculatorController.operator = oper;
             CalculatorController.value = "0";
+            return;
         }
-        if (oper === '/') {
-            CalculatorController.operator = '/';
+        if (CalculatorController.operator === '/') {
+            CalculatorModel.divide(CalculatorController.value);
+            document.getElementById('result').value = CalculatorModel.value;
+            CalculatorController.operator = oper;
             CalculatorController.value = "0";
+            return;
         }
 
         if(oper === '='){
@@ -59,7 +75,9 @@ class CalculatorController {
             CalculatorController.value = "0";
 
             document.getElementById('result').value = CalculatorModel.getValue();
+            return;
         }
+        CalculatorController.operator = oper;
     }
     static inputClearButton() {
         CalculatorController.value = "0";
