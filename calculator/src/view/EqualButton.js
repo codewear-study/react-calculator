@@ -22,3 +22,5 @@ export const EqualButton = ({ value }) =>{
         </button>
     );
 };
+
+export default EqualButton;

@@ -4,7 +4,8 @@ import OperatorButton from "./OperatorButton";
 import ClearButton from "./ClearButton";
 import DisplayField from "./DisplayField";
 import BackButton from "./BackButton";
-import { EqualButton } from "./EqualButton";
+import DecimalPointButton from "./DecimalPointButton";
+import EqualButton from "./EqualButton";
 
 const Panel = () => (
         <div className="display-panel">
@@ -36,6 +37,7 @@ const Panel = () => (
                     <EqualButton value={"="}/>
                     <ClearButton value={"C"}/>
                     <BackButton value={"B"}/>
+                    <DecimalPointButton value="."/>
                 </div>
             </div>
 

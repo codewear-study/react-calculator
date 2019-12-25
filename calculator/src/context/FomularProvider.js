@@ -1,5 +1,5 @@
 import React, { useState, createContext } from 'react';
-import { OperatorFunction } from '../model/operator';
+import { OperatorFunction } from '../model/Operator';
 import { ErrorText } from '../utils/Error';
 
 export const FomularContext = createContext();
@@ -83,7 +83,38 @@ const FomularProvider = props => {
         
         setRightOperand('');
         setOperator('');
-    }
+    };
+
+    const handleDecimalPointButton = () => {
+        if(operator !== '' && rightOperand === '')
+        {
+            setRightOperand('0.');
+            return;
+        }
+
+        if(operator !== '' && rightOperand !== '')
+        {
+            if(rightOperand.includes('.'))
+                return;
+            
+            setRightOperand(rightOperand + '.')
+            return;
+        }
+        
+        if(operator === '')
+        {
+            if(leftOperand.includes('.'))
+                return;
+
+            if(leftOperand === '')
+            {
+                setLeftOperand('0.');
+                return;
+            }
+            
+            setLeftOperand(leftOperand + '.');
+        }
+    };
 
     return (
         <FomularContext.Provider
@@ -93,6 +124,7 @@ const FomularProvider = props => {
                 handleEqualButton,
                 handleOperandButton,
                 handleOperatorButton,
+                handleDecimalPointButton,
                 leftOperand,
                 operator,
                 rightOperand,

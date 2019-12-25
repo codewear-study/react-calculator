@@ -2,6 +2,7 @@ const KeyCode = {
     backspace : 8,
     equal : 13,
     clear : 67,
+    decimalPoint : 190,
     isNumber : (keyCode) => {
         if(keyCode >= 48 && keyCode <= 57)
             return true;
