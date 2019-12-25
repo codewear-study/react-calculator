@@ -1,30 +1,34 @@
-import React, { createContext } from 'react';
+import React, { useState, createContext } from 'react';
 import { OperatorFunction } from '../model/operator';
+import { ErrorText } from '../utils/Error';
 
-const FomulaContext = createContext();
+export const FomularContext = createContext();
 
-const FomulaProvider = props => {
+const FomularProvider = props => {
     const [leftOperand, setLeftOperand] = useState('');
     const [operator, setOperator] = useState('');
     const [rightOperand, setRightOperand] = useState('');
 
-    // 왼쪽 값입력중이면 왼쪽값을
-    // 오퍼레이터라면 오퍼레이터를
-    // rightOperand가 있다면 rightOperand
     const handleBackButton = () => {
-        if(rightOperand != '')
+        if(leftOperand === ErrorText)
+        {
+            setLeftOperand('');
+            return;
+        }
+
+        if(rightOperand !== '')
         {
             setRightOperand(rightOperand.slice(0, rightOperand.length - 1))
             return;
         }
          
-        if(operator != '')
+        if(operator !== '')
         {
             setOperator('')
             return;
         }
         
-        if(leftOperand != '')
+        if(leftOperand !== '')
         {
             setLeftOperand(leftOperand.slice(0, leftOperand.length - 1))
             return;
@@ -37,26 +41,65 @@ const FomulaProvider = props => {
         setRightOperand('');
     };
     
-    const handleOperandButton = () => {
+    const handleOperandButton = (value) => {
+        if(leftOperand === ErrorText)
+        {
+            setLeftOperand('');
+            return;
+        }
 
+        if(isNaN(leftOperand + value))
+            return;
+
+        if(operator !== "")
+        {
+            setRightOperand(String(parseFloat(rightOperand + value)));
+            return;
+        }
+
+        setLeftOperand(String(parseFloat(leftOperand + value)));
     };
 
-    const handleCalculateButton = () =>{
-        setLeftOperand(OperatorFunction[operator](leftOperand, rightOperand));
+    const handleOperatorButton = (value) => {
+        if(leftOperand === "" || leftOperand === ErrorText)
+            return;
+
+        if(leftOperand !== "" && rightOperand === "") 
+            setOperator(value);
+
+        if(leftOperand !== "" && 
+            operator !== "" &&
+            rightOperand !== "")
+            setLeftOperand(OperatorFunction[operator](leftOperand, rightOperand));  
+    };
+
+    const handleEqualButton = () => {
+        try{
+            setLeftOperand(OperatorFunction[operator](leftOperand, rightOperand));
+        }
+        catch(e){
+            setLeftOperand(e);    
+        }
+        
+        setRightOperand('');
+        setOperator('');
     }
 
     return (
-        <FomulaContext.Provider
+        <FomularContext.Provider
             value={{
                 handleBackButton,
                 handleClearButton,
-                handleDisplay,
-                handleCalculateButton,
-            }}
-        >
+                handleEqualButton,
+                handleOperandButton,
+                handleOperatorButton,
+                leftOperand,
+                operator,
+                rightOperand,
+            }}>
             {props.children}
-        </FomulaContext.Provider>
+        </FomularContext.Provider>
     );
 };
 
-export default FomulaProvider;  
+export default FomularProvider;  

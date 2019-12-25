@@ -1,31 +1,33 @@
 import React, { useContext, useEffect } from "react";
 import { FomularContext } from "../context/FomularProvider";
-import { KeyCode } from "../utils/KeyCode";
+import KeyCode from "../utils/KeyCode";
 
-export const BackButton = () => {
+const BackButton = ({ value }) => {
     const { handleBackButton } = useContext(FomularContext);
     
     const isBackspace = keyCode =>{
-        if(KeyCode.BackButton === keyCode)
+        if(KeyCode.backspace === keyCode)
             return true;
         
         return false;
     };
 
     const handleKeyDownBackspace = event => {
-        if(isBackspace(event.keyCode))
+        if(isBackspace(event.which))
             handleBackButton();
     }
 
-    useEffect(()=> {
-        document.addEventListener("keyCodedown", handleKeyDownBackspace);
+    useEffect(()=> {    
+        window.addEventListener("keydown", handleKeyDownBackspace);
         
-        return document.removeEventListener("keyCodedown", handleKeyDownBackspace)
-    }, []);
+        return () => window.removeEventListener("keydown", handleKeyDownBackspace);
+    });
 
     return (
-        <button onClick={() => handleBackButton()}>
-            B
+        <button className="operator-btn" onClick={() => handleBackButton()}>
+            {value}
         </button>
     );
 };
+
+export default BackButton;

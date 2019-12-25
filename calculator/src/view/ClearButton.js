@@ -1,12 +1,26 @@
-import React, { useContext } from "react";
-import { FoumlaContext } from '../context/FomularProvider';
+import React, { useContext, useEffect } from "react";
+import { FomularContext } from '../context/FomularProvider';
+import KeyCode from "../utils/KeyCode";
 
-export const ClearButton = () =>{
-    const { handleClearButton } = useContext(FoumlaContext);
+const ClearButton = ({value}) =>{
+    const { handleClearButton } = useContext(FomularContext);
+
+    const handleKeyDownClear = event => {
+        if(KeyCode.clear === event.which)
+            handleClearButton();
+    };
+
+    useEffect(()=> {    
+        window.addEventListener("keydown", handleKeyDownClear);
+        
+        return () => window.removeEventListener("keydown", handleKeyDownClear);
+    });
 
     return (
-        <button onClick={() => handleClearButton}>
-            C
+        <button className="operator-btn" onClick={() => handleClearButton()}>
+            {value}
         </button>
     );
 };
+
+export default ClearButton;

@@ -1,12 +1,29 @@
-import React, { useContext } from 'react';
-import { FoumlaContext } from '../context/FomularProvider';
+import React, { useContext, useEffect } from 'react';
+import { FomularContext } from '../context/FomularProvider';
+import KeyCode from "../utils/KeyCode";
 
-export const OperatorButton = ({operator}) =>{
-    const { handleOperatorButton } = useContext(FoumlaContext);
+const OperatorButton = ({value}) =>{
+    const { handleOperatorButton } = useContext(FomularContext);
     
+    const handleKeyDownOperator = event => {
+        if(!KeyCode.isOperator(event.which))
+            return;
+
+        if(event.key === value)
+            handleOperatorButton(value);
+    };
+
+    useEffect(()=> {    
+        window.addEventListener("keydown", handleKeyDownOperator);
+        
+        return () => window.removeEventListener("keydown", handleKeyDownOperator);
+    });
+
     return (
-        <button onClick= {() => handleOperatorButton(operator)}>
-            {operator}
+        <button className="operator-btn" onClick= {() => handleOperatorButton(value)}>
+            {value}
         </button>
     );
 };
+
+export default OperatorButton;
