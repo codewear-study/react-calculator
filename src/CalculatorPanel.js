@@ -1,12 +1,13 @@
 import React from 'react';
-import CalculatorController from './CalculatorController';
 import NumberButton from './NumberButton'
 import OperatorButton from './OperatorButton';
+import ClearButton from './ClearButton';
+import ResultField from './ResultField';
 const CalculatorTemplate = () =>{
     return (
         <div>
             <h1>
-                <input id="result"></input>
+                <ResultField></ResultField>
             </h1>
             <h1>
                 <OperatorButton operator="+"></OperatorButton>
@@ -31,7 +32,7 @@ const CalculatorTemplate = () =>{
             </h1>
 
             <h1>
-                <button onClick={CalculatorController.inputClearButton.bind(this)}>clear</button>
+                <ClearButton></ClearButton>
             </h1>
         </div>
     );

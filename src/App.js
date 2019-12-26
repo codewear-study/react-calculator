@@ -1,12 +1,10 @@
 import React from 'react';
 import './App.css';
-import CalculatorTemplate from './CalculatorTemplate';
+import CalculatorPanel from './CalculatorPanel';
 
 function App() {
   return (
-    <div>
-      <CalculatorTemplate></CalculatorTemplate>
-    </div>
+      <CalculatorPanel></CalculatorPanel>
   );
 }
 
