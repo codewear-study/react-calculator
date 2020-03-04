@@ -1,14 +1,26 @@
 import React from 'react'
-import CalculatorController from './CalculatorController'
 
-class NumberButton extends React.Component{
-    render(){
-        return(
-            <button 
-                onClick={CalculatorController.inputNumberFromButton.bind(this, this.props.value)}>{this.props.value}
-            </button>
-        )
+const NumberButton = props => {
+    const { number, calculator, value, setValue, operator, setOperator, setResult } = props;
+
+    const handleClick = () => {
+        if (value === "0") {
+            setValue(number);
+            setResult(value);
+            return;
+        }
+        if (operator === "=") {
+            calculator.setValue("0");
+            setOperator("");
+        }
+        // setValue(value + number);
+        // setResult(value);
     }
-}
 
+    return (
+        <button
+            onClick={handleClick()}>{number}
+        </button>
+    )
+}
 export default NumberButton;

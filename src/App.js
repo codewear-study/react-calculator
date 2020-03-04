@@ -1,10 +1,9 @@
 import React from 'react';
-import './App.css';
-import CalculatorPanel from './CalculatorPanel';
+import CalculatorTemplate from './CalculatorTemplate';
 
-function App() {
+const App = () => {
   return (
-      <CalculatorPanel></CalculatorPanel>
+    <CalculatorTemplate />
   );
 }
 

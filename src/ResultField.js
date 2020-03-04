@@ -1,14 +1,10 @@
 import React from 'react'
 
-class ResultField extends React.Component{
-    
-    input = null;
-
-    render(){
-        return(
-           <input id="result" ref={ref =>{this.input = ref;}}></input>
-        )
-    }
+const ResultField = props => {
+    const { result } = props;
+    return (
+        <input type="text" name="result" value={result}></input>
+    )
 }
 
 export default ResultField;
